@@ -9,7 +9,7 @@ FROM rocker/r-ver:4.0.3
 ARG INSTALL_ZSH="false"
 ARG INSTALL_FISH="true"
 ARG UPGRADE_PACKAGES="true"
-ARG USERNAME=eric
+ARG USERNAME=yoni.sidi
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -28,12 +28,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # key dependencies for certain R packages
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends software-properties-common libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc \
+    && apt-get -y install --no-install-recommends software-properties-common libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc libxtst6:i386 \
     && apt-get -y install --no-install-recommends libfreetype6-dev libfontconfig1-dev tk \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* 
 
 # install R packages needed for VSCode interaction and package management
-RUN install2.r languageserver renv remotes
+RUN install2.r languageserver renv remotes shiny
 RUN installGithub.r nx10/httpgd
 
 # install radian via python and pip3
@@ -65,3 +65,4 @@ COPY library-scripts/.Rprofile-vscode /renv/.Rprofile-vscode
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 
+CMD R -e "shiny::runApp(system.file('examples/01_hello',package='shiny'))"

@@ -9,6 +9,7 @@
 !.dockerignore
 !rstudio_config_dir/
 !rstudio_docker/
+!vsc_docker/
 !docker-compose.yml
 
 .Rproj.user

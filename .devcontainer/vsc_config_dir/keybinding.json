@@ -1,0 +1,12 @@
+[
+    {
+        "key": "ctrl+alt+p",
+        "command": "r.runCommand",
+        "when": "editorTextFocus && editorLangId == 'r'",
+        "args": ".vsc.browser(httpgd::hgd_url(), viewer = \"Beside\")"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.terminal.clear"
+    }
+]
